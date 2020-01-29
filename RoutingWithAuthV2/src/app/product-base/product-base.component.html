@@ -1,0 +1,13 @@
+<div class="bg-success" style="height: 900px;">
+  <!-- To take input -->
+  <!-- handle the submit_info event of product-entry component 
+      Data that comes with event is passed to function : with variable name ($event)
+      $event : object of type Product
+  -->
+  <app-product-entry (submit_info) = "addNewProduct($event)"></app-product-entry>
+
+<hr/>
+  <!-- Show the list : replaced the code with a tag-->
+  <!-- pass the data : products ==> productsList -->
+  <app-product-list [productsList]="products" > </app-product-list>
+</div>
