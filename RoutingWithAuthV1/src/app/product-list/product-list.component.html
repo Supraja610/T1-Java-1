@@ -1,0 +1,18 @@
+<div>
+  <table class="table">
+    <thead>
+      <th>Sn</th>
+      <th>NAME</th>
+      <th>CATEGORY</th>
+      <th>COST</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of productsList; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{product.name}}</td>
+        <td>{{product.category}}</td>
+        <td>{{product.cost}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
