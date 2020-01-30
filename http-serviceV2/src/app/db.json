@@ -1,0 +1,34 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "First",
+      "category": "Books",
+      "cost": 500
+    },
+    {
+      "id": 2,
+      "name": "Second",
+      "category": "Electronics",
+      "cost": 900
+    },
+    {
+      "id": 3,
+      "name": "Third",
+      "category": "Games",
+      "cost": 400
+    },
+    {
+      "id": 4,
+      "name": "Fourth",
+      "category": "Music",
+      "cost": 200
+    },
+    {
+      "name": "Fifth",
+      "category": "Books",
+      "cost": 100,
+      "id": 5
+    }
+  ]
+}
