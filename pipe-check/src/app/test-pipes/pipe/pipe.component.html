@@ -1,0 +1,10 @@
+<div>
+    <h1>Pipe Component!</h1>
+    <h3>Name : {{name | uppercase}}</h3>
+    <h3>Rate : {{rate | currency : 'Rs.'}}</h3>
+    <h3>Gpa : {{gpa | number : '3.2-2' }}</h3>
+    <h3>Hobbies : {{hobbies | slice : 1 : 3}}</h3>
+    <h3>Profile : {{profile | json}}</h3>
+    <h3>Dob : {{dob | date : 'd/M/y'}}</h3>
+    <h3>Capacity :  {{capacity | size : "xyz"}}</h3>
+</div>
