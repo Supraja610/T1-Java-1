@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Config goes here -->
+	
+	<!-- Reference of properties file -->
+	<context:property-placeholder location="message-repo.properties"/>
+	
+	
+	<!-- Fortune service initialization -->
+	<bean id="fortuneServiceId" class="com.cts.training.spring.services.ProfessionalFortune"/>
+	
+	
+	
+	<!-- Decide which object to expose... 
+		class : Object of which class to create
+		id: exposing that object with what name
+	<bean id="msgService" class="com.cts.training.spring.services.EmailService"/>
+	-->
+	<bean id="msgService" 
+		  class="com.cts.training.spring.services.EmailService" 
+		  init-method="postConstruct"
+		  destroy-method="preDestroy"
+		  scope="prototype">
+			<!-- Constructor  based DI 
+				<constructor-arg ref="fortuneServiceId"/>
+			-->
+			<!-- Setter based DI 
+				auto calls : setFortuneService()
+			 -->
+			<property name="fortuneService" ref="fortuneServiceId"/>
+			<!-- injecting literal value  
+				<property name="sender" value="ceo@mail.com"/>
+				Spring Expression Language : SpEL
+			-->
+			<property name="sender" value="${mail.sender}"/>
+			
+	</bean>
+	
+    
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
