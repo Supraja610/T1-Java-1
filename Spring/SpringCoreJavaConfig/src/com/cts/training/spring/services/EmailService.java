@@ -38,7 +38,7 @@ public class EmailService implements IMessageService{
 	
 	/*************** Setter Based DI ***********/
 	@Autowired
-	@Qualifier("personalFortune") // which implementation of IFortuneService to inject
+	// @Qualifier("personalFortune") // which implementation of IFortuneService to inject
 	public void xyz(IFortuneService fortuneService) {
 		this.fortuneService = fortuneService;
 	}
