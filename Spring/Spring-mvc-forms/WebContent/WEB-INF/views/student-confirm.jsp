@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,5 +13,26 @@
 <!-- stud.name ~ stud.getUname() -->
 <h2>NAME  : ${student.uname}</h2>
 <h2>EMAIL : ${student.email}</h2>
+<h2>COUNTRY : ${student.country}</h2>
+<h2>FAVORITE LANGUAGE : ${student.favoriteLanguage}</h2>
+<h2>OPERATING SYSTEMS : </h2>
+<ul>
+	<core:forEach var="os" items="${student.operatingSystems}">
+		<li>${os}</li>
+	</core:forEach>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
