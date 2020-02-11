@@ -8,19 +8,27 @@
 <title>Insert title here</title>
 </head>
 <body>
+<!-- ${pageContext.request.contextPath} : Context Path ~ Base Url -->
+<a href="${pageContext.request.contextPath}/student/entry">Add New Student</a>
+
+<hr/>
 <table border="1" width="100%">
 	<thead>
 		<th>NAME</th>
 		<th>EMAIL</th>
+		<th></th>
+		<th></th>
 	</thead>
 	<tbody>
 		<core:forEach var="student" items="${students}">
 			<tr>
 				<td>${student.name}</td>
 				<td>${student.email}</td>
+				<td><a href="${pageContext.request.contextPath}/student/update?id=${student.id}">UPDATE</a></td>
+				<td><a href="${pageContext.request.contextPath}/student/delete/${student.id}">DELETE</a></td>
 			</tr> 
 		</core:forEach>
 	</tbody>
 </table>
-</body>
+</boy>
 </html>

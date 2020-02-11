@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.cts.training.mavenweb.entity.Student;
 
-@Component
+// @Component
+@Repository
 public class StudentDaoJdbcTemplateImpl implements IStudentDao {
 
 	// has the dependency on DataSource
