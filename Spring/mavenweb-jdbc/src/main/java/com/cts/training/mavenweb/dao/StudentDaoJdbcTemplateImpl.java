@@ -1,5 +1,7 @@
 package com.cts.training.mavenweb.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -7,6 +9,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +30,27 @@ public class StudentDaoJdbcTemplateImpl implements IStudentDao {
 	private final String SQL_UPDATE = "update student set name=?, email=? where id=?";
 	private final String SQL_DELETE = "delete from student where id=?";
 	
+	// custom row mapper class
+	// we can define custom logic to map ResultSet data into Student object
+	class StudentRowMapper implements RowMapper<Student>{
+
+		// walk through function, will be called for all records
+		// ResultSet rs : will be an active ResultSet
+		// rowNum : Record number
+		@Override
+		public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
+			// TODO Auto-generated method stub
+			Student student = new Student();
+			
+			// mapping
+			student.setId(rs.getInt("id"));
+			student.setName(rs.getString("name").toUpperCase());
+			student.setEmail(rs.getString("email"));
+			
+			return student;
+		}
+		
+	}
 	
 	@Autowired
 	public StudentDaoJdbcTemplateImpl(DataSource dataSource) {
@@ -42,7 +66,9 @@ public class StudentDaoJdbcTemplateImpl implements IStudentDao {
 		// mapper  : will be used to map it into List<Student>
 		// BeanPropertyRowMapper : converts each record from ResultSet into Student object
 		// and assembles them as a collection
-		List<Student> students = this.jdbcTemplate.query(this.SQL_FETCH_ALL,new BeanPropertyRowMapper<Student>(Student.class));
+		List<Student> students = this.jdbcTemplate.query(this.SQL_FETCH_ALL,
+														 new StudentRowMapper());				
+														 // new BeanPropertyRowMapper<Student>(Student.class));
 		
 		return students;
 	}
@@ -53,6 +79,7 @@ public class StudentDaoJdbcTemplateImpl implements IStudentDao {
 		Student student =  this.jdbcTemplate.queryForObject(this.SQL_FETCH_BY_ID,
 										 new Object[] {id}, // place holder values
 										 new BeanPropertyRowMapper<Student>(Student.class));
+		System.out.println(student);
 		return student;
 	}
 
