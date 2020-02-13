@@ -1,5 +1,8 @@
 package com.cts.training.mavenweb.config;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,13 +18,29 @@ import org.springframework.security.core.userdetails.User.UserBuilder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// WebSecurityConfigurerAdapter : provides 3 methods : configure
 	
+	// dependency
+	@Autowired
+	private DataSource dataSource;
+	
 	// configure the credentials repository
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// TODO Auto-generated method stub
 		
-	
-		// in-memory auth
+		/********** JDBC Authentication ***************/
+		
+		// default schema
+		auth.jdbcAuthentication().dataSource(dataSource);
+		
+		// custom schema
+		/*auth.jdbcAuthentication().dataSource(dataSource)
+			.usersByUsernameQuery("")  // for reading username and password (authentication)
+			.authoritiesByUsernameQuery(""); // for reading roles (authorazation)
+		*/
+		
+		
+		/*********** in-memory auth ***********/
+		/*
 		// User : allows to create user
 		UserBuilder builder =  User.withDefaultPasswordEncoder();
 		
@@ -31,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.withUser(builder.username("First").password("abc").roles("EMPLOYEE"))
 			.withUser(builder.username("Second").password("abc").roles("EMPLOYEE","MANAGER"))
 			.withUser(builder.username("Third").password("abc").roles("EMPLOYEE","ADMIN"));
+		*/	
 	}
 	
 	// secure the application : define the accessibility rule
@@ -75,7 +95,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 }
 
 
-
+/***********
+ * {bcrypt}$2a$04$ON6IrjLRg7WWRB5k/E8sfOvHwBiCz.8kmDTVywU/WUC5UZoJm0OiO
+ */
 
 
 
