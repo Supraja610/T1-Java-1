@@ -49,6 +49,41 @@
 	    <version>5.2.2.RELEASE</version>
 	</dependency>
 	
+	<!-- Hibernate Validation API -->
+	<!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+	<dependency>
+	    <groupId>org.hibernate.validator</groupId>
+	    <artifactId>hibernate-validator</artifactId>
+	    <version>6.1.2.Final</version>
+	</dependency>
+	
+	<!-- Hibernate Core Dependency -->
+   <!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core -->
+	<dependency>
+	    <groupId>org.hibernate.orm</groupId>
+	    <artifactId>hibernate-core</artifactId>
+	    <version>6.0.0.Alpha4</version>
+	</dependency>
+    
+    <!-- Plumbing ORM Dependency -->
+    
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-orm</artifactId>
+	    <version>5.2.3.RELEASE</version>
+	</dependency>
+    
+    
+    
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-tx -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-tx</artifactId>
+	    <version>5.2.3.RELEASE</version>
+	</dependency>
+    
+	
 	
 	<!-- Dependency for ComboPooled DataSource -->
     <!-- https://mvnrepository.com/artifact/com.mchange/c3p0 -->

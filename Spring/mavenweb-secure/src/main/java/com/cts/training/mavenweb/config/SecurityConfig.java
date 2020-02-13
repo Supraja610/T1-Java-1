@@ -75,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			*/
 	/*************** With Role Authentication *****************/	
 	http.authorizeRequests() // start  defining the rule
-		.antMatchers("/").hasRole("EMPLOYEE") // any request for root (/) is accessible to users under role EMPLOYEE
+		.antMatchers("/home").hasRole("EMPLOYEE") // any request for root (/) is accessible to users under role EMPLOYEE
 		.antMatchers("/manager/**").hasRole("MANAGER")
 		.antMatchers("/admin/**").hasRole("ADMIN")
 	.and() //how authentication should take place (and() returns a new http)
@@ -84,6 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.formLogin() // want to form based authentication
 		.loginPage("/custom-login") // custom login form
 		.loginProcessingUrl("/validate") // implementation is provided free
+		.defaultSuccessUrl("/home")
 		.permitAll() // allow all users to access login-page
 	.and()
 		.logout() // implementation is provided free (/logout : default url)
