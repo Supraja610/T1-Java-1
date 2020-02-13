@@ -10,4 +10,9 @@ public class LoginController {
 	public String login() {
 		return "login-form";
 	}
+	
+	@RequestMapping("/custom-error")
+	public String error() {
+		return "error-page";
+	}
 }

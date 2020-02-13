@@ -26,5 +26,10 @@
 	<br/>
 	<input type="submit" value="Login" />
 </spring-form:form>
+<core:if test="${param.logout != null}">
+	<i>You have been logged out successfully!!!</i>
+</core:if>
+
+
 </body>
 </html>
