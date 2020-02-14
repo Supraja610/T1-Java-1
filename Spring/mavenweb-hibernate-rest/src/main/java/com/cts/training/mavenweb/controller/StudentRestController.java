@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,56 +34,95 @@ public class StudentRestController {
 	
 	// @RequestMapping(value =  "/students", method = {RequestMethod.GET, RequestMethod.PUT} )
 	@GetMapping("/students") // GET HTTP VERB
-	public List<Student> exposeAll() {
+	public ResponseEntity<List<Student>> exposeAll() {
 		
 		List<Student> students = this.studentService.findAllStudents();
+		// if(students.size() == 0)
+		if(students == null)
+			throw new StudentNotFoundException("Not able to fetch records!!!");
+		ResponseEntity<List<Student>> response = 
+								new ResponseEntity<List<Student>>(students, HttpStatus.OK);
 		
-		return students;
+		
+		return response;
 	}
 	
 	// {<data variable>}
 	@GetMapping("/students/{studentId}") // GET HTTP VERB
-	public Student getById(@PathVariable Integer studentId) {
+	public ResponseEntity<Student> getById(@PathVariable Integer studentId) {
 		
 		Student student = this.studentService.findStudentById(studentId);
 		if(student == null)
 			throw new StudentNotFoundException("Student with id-" + studentId + " not Found");
-		return student;
+		
+		ResponseEntity<Student> response = 
+				new ResponseEntity<Student>(student, HttpStatus.OK);
+
+		return response;
 	}
 	
 	// @RequestMapping(value =  "/students", method = RequestMethod.POST)
 	@PostMapping("/students") // POST HTTP VERB
-	public Student save(@RequestBody Student student) {
-		this.studentService.addStudent(student);
-		return student;
+	public ResponseEntity<Student> save(@RequestBody Student student) {
+		if(!this.studentService.addStudent(student))
+			throw new RuntimeException("Could not add new record!!!");
+		ResponseEntity<Student> response = 
+				new ResponseEntity<Student>(student, HttpStatus.OK);
+
+		return response;
 	}
 	
 	@PutMapping("/students")
-	public Student saveUpdate(@RequestBody Student student) {
-		this.studentService.updateStudent(student);
-		return student;
+	public ResponseEntity<Student> saveUpdate(@RequestBody Student student) {
+		if(!this.studentService.updateStudent(student))
+			throw new RuntimeException("Could not update record!!!");
+		ResponseEntity<Student> response = 
+				new ResponseEntity<Student>(student, HttpStatus.OK);
+
+		return response;
 	}
 	
 	@DeleteMapping("/students/{studentId}")
-	public Student delete(@PathVariable Integer studentId) {
+	public ResponseEntity<Student> delete(@PathVariable Integer studentId) {
 		
 		Student student = this.studentService.findStudentById(studentId);
+		if(student == null)
+			throw new StudentNotFoundException("Student with id-" + studentId + " not Found");
 		
 		// send studentId to DAO via SERVICE
 		this.studentService.deleteStudent(studentId);
 		
-		return student;
+		ResponseEntity<Student> response = 
+				new ResponseEntity<Student>(student, HttpStatus.OK);
+
+		return response;
 	}
 	
+	/*
 	// for exception handling
 	@ExceptionHandler  // ~catch
-	public StudentErrorResponse studentNotFoundHandler(StudentNotFoundException ex) {
+	public ResponseEntity<StudentErrorResponse> studentNotFoundHandler(StudentNotFoundException ex) {
 		// create error object
 		StudentErrorResponse error = new StudentErrorResponse(ex.getMessage(), 
 															  HttpStatus.NOT_FOUND.value(), 
 															  System.currentTimeMillis());
-		return error;
+		ResponseEntity<StudentErrorResponse> response =
+										new ResponseEntity<StudentErrorResponse>(error, HttpStatus.NOT_FOUND);
+		
+		return response;
 	}
+	
+	@ExceptionHandler  // ~catch
+	public ResponseEntity<StudentErrorResponse> studentOperationErrorHAndler(Exception ex) {
+		// create error object
+		StudentErrorResponse error = new StudentErrorResponse(ex.getMessage(), 
+															  HttpStatus.BAD_REQUEST.value(), 
+															  System.currentTimeMillis());
+		ResponseEntity<StudentErrorResponse> response =
+										new ResponseEntity<StudentErrorResponse>(error, HttpStatus.NOT_FOUND);
+		
+		return response;
+	}*/
 	
 	
 	
