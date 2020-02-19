@@ -20,7 +20,7 @@ public class StudentDao {
 	@Autowired
 	private EntityManager em;
 	
-	// @Transactional
+	@Transactional
 	public Student findById(Integer id) {
 		Student student = this.em.find(Student.class, id);
 		logger.info("Student Data : "  + student);

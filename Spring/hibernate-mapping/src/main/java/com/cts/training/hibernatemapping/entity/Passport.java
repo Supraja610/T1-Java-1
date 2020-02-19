@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -28,6 +29,9 @@ public class Passport {
 	
 	@Column
 	private String passportNumber;
+	
+	@OneToOne(mappedBy = "passport")
+	private Student student;
 
 	public Integer getId() {
 		return id;
@@ -43,6 +47,14 @@ public class Passport {
 
 	public void setPassportNumber(String passportNumber) {
 		this.passportNumber = passportNumber;
+	}
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 	
 	

@@ -21,11 +21,11 @@ public class StudentDaoTests {
 	@Autowired
 	private StudentDao studentDao;
 	
-	@Test
+	/*@Test
 	public void testFindById() {
 		Student student = studentDao.findById(1);
 		assertEquals("First", student.getName());
-	}
+	}*/
 
 	/*@Test
 	public void testAddStudent() {
