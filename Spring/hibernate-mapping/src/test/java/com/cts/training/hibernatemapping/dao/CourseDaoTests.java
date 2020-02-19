@@ -44,7 +44,7 @@ class CourseDaoTests {
 		assertEquals("C#", added.getName());
 	}*/
 	
-	@Test
+	/*@Test
 	void testAddCourseWithReviews() {
 		Course course = new Course();
 		course.setName("Kotlin");
@@ -61,7 +61,7 @@ class CourseDaoTests {
 		
 		Course added = this.courseDao.addCourseWithReviews(course, reviews);
 		assertEquals("Kotlin", added.getName());
-	}
+	}*/
 
 
 }
