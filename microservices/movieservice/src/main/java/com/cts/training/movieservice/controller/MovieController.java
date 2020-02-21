@@ -3,6 +3,7 @@ package com.cts.training.movieservice.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,8 @@ import com.cts.training.movieservice.repository.MovieRepository;
 @RestController
 public class MovieController {
 
+	@Autowired
+	private Environment env;
 	// dependency
 	@Autowired
 	private MovieRepository movieRepository;
@@ -27,6 +30,8 @@ public class MovieController {
 		Movie movie = new Movie();
 		if(record.isPresent())
 			movie = record.get();
+		String port =  env.getProperty("server.port");
+		movie.setMovieName(movie.getMovieName() + " (" + port + ")");
 		ResponseEntity<Movie> response = new ResponseEntity<Movie>(movie, HttpStatus.OK);
 		return response;
 	}
