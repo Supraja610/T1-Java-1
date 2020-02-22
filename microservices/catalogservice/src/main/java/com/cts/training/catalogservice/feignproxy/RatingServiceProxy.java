@@ -10,9 +10,10 @@ import com.cts.training.catalogservice.model.RatingData;
 
 
 // @FeignClient(name = "rating-service", path = "http://localhost:6060")
-@FeignClient(name = "rating-service")
+// @FeignClient(name = "rating-service")
+@FeignClient(name = "api-gateway")
 @RibbonClient(name = "rating-service") 
 public interface RatingServiceProxy {
-	@GetMapping("/ratings/{userId}")
+	@GetMapping("rating-service/ratings/{userId}")
 	public ResponseEntity<RatingData> getRatings(@PathVariable Integer userId);
 }

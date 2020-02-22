@@ -13,10 +13,12 @@ import com.cts.training.catalogservice.model.Movie;
 // 1. url (name of the microservice)
 // 2. connection details of microservice (IP/PORT)
 // @FeignClient(name = "movie-service", path = "http://localhost:9090") // context-path
-@FeignClient(name = "movie-service") // path is managed by server
+// @FeignClient(name = "movie-service") // path is managed by server
+@FeignClient(name = "api-gateway") // for passing all request through API Gateway
 // configure the Ribbon to load balance
 @RibbonClient(name = "movie-service") // will activate load balancing on movie-service
 public interface MovieServiceProxy {
-	@GetMapping("/movies/{movieId}")
+	// @GetMapping("/movies/{movieId}")
+	@GetMapping("movie-service/movies/{movieId}")
 	public ResponseEntity<Movie> movieDetail(@PathVariable Integer movieId);
 }
