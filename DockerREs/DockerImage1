@@ -1,0 +1,74 @@
+
+docker build -t <image-name>:<tag-name> <location of Dockerfile> 
+
+
+docker run -p <host-port>:<internal-port>  cts/node-application-image-test:latest
+
+# Removing exited containers cache
+docker container prune
+
+
+
+
+
+
+
+
+
+### Building an Image
+
+1. Build a Jar - /target/<application build>.jar
+2. Setup the Prerequisites for Running the JAR - openjdk:8-jdk-alpine
+3. Copy the jar
+4. Run the jar
+
+### Docker Commands - Creating Image Manually
+
+- docker run -dit openjdk:8-jdk-alpine
+- docker container exec <image-name> ls /tmp
+- docker container cp target/<application build>.jar <image-name>:/tmp
+- docker container exec <image-name> ls /tmp
+- docker container commit <image-name> cts/<new-image-name>:<tag>
+- docker run cts/<new-image-name>:<tag>
+- docker container ls
+- docker container commit --change='CMD ["java","-jar","/tmp/<application build>.jar"]' <image-name> cts/<new-image-name>:<tag>
+- docker run -p <host-port>:<container-port> cts/<new-image-name>:<tag>
+
+# Dockerfile
+
+FROM openjdk:8-jdk-alpine
+EXPOSE 8080
+
+
+
+
+
+
+
+
+
+
+ADD target/<application build>.jar <application build>.jar
+CMD ["java","-jar","/tmp/<application build>.jar"]
+
+docker build t cts/<image-name>:<tag> <where to fetch docker file from>
+
+# plugin
+<plugin>
+	<groupId>com.spotify</groupId>
+	<artifactId>dockerfile-maven-plugin</artifactId>
+	<version>1.4.10</version>
+	<executions>
+		<execution>
+			<id>default</id>
+			<goals>
+				<goal>build</goal>
+			</goals>
+		</execution>
+	</executions>
+	<configuration>
+		<repository>cts/${project.name}</repository>
+		<tag>${project.version}</tag>
+		<skipDockerInfo>true</skipDockerInfo>
+	</configuration>
+</plugin>
