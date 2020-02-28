@@ -9,6 +9,10 @@ spring.datasource.password=${RDS_PASSWORD:pass}
 # mysql docker
 docker run --detach --env MYSQL_ROOT_PASSWORD=<root-pass> --env MYSQL_USER=<user> --env MYSQL_PASSWORD=<pass> --env MYSQL_DATABASE=<db-name> --name mysql --publish 3306:3306 mysql:5.7
 
+docker container exec it <containerid> bash
+mysql u<username> p<password>
+
+
 #Spring Boot Connected with mysql
 docker container run -p 8080:8080 --link=mysql -e RDS_HOSTNAME=mysql  cts/<image-name>:<tag>
 
@@ -24,4 +28,4 @@ docker run --detach --env MYSQL_ROOT_PASSWORD=<root-pass> --env MYSQL_USER=<user
 
 docker container run -p 8080:8080 --network=<network name> -e RDS_HOSTNAME=mysql  cts/<image-name>:<tag>
 
-docker run --detach --env MYSQL_ROOT_PASSWORD=<root-pass> --env MYSQL_USER=<user> --env MYSQL_PASSWORD=<pass> --env MYSQL_DATABASE=<db-name> --name mysql --publish 3306:3306 --network=<network name> --volume mysql-database-volume:/var/lib/mysql mysql:5.7
+docker run --detach --env MYSQL_ROOT_PASSWORD=<root-pass> --env MYSQL_USER=<user> --env MYSQL_PASSWORD=<pass> --env MYSQL_DATABASE=<db-name> --name mysql --publish 3306:3306 --network=<network name> --volume mysql-database-volume:d:\data\mysql mysql:5.7

@@ -37,19 +37,13 @@ docker container prune
 # Dockerfile
 
 FROM openjdk:8-jdk-alpine
-EXPOSE 8080
-
-
-
-
-
-
-
-
-
-
-ADD target/<application build>.jar <application build>.jar
+ADD target/<application build>.jar /tmp/<application build>.jar
 CMD ["java","-jar","/tmp/<application build>.jar"]
+
+
+
+
+
 
 docker build t cts/<image-name>:<tag> <where to fetch docker file from>
 

@@ -1,0 +1,76 @@
+version: '3.7'
+services:
+
+  
+  naming-server:
+    image: cts/discovery-server:0.0.1-SNAPSHOT
+    #build:
+      #context: discovery-server
+      #dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    restart: always
+    networks:
+      - pixogram-network
+
+  
+
+  zuul-api-gateway:
+    image: in28min/api-gateway:0.0.1-SNAPSHOT
+    #build:
+      #context: api-gateway
+      #dockerfile: Dockerfile
+    
+    ports:
+      - "8765:8765"
+    restart: always
+    depends_on:
+      - naming-server
+      - mysql 
+    environment:
+      RDS_HOSTNAME: mysql
+      RDS_PORT: 3306
+      RDS_DB_NAME: micro-user-db
+      RDS_USERNAME: root
+      RDS_PASSWORD: abc
+    networks:
+      - pixogram-network
+
+  user-service:
+    image: in28min/user-service:0.0.1-SNAPSHOT
+    #build:
+      #context: user-service
+      #dockerfile: Dockerfile    
+    ports:
+      - "9090:9090"
+    restart: always
+    depends_on:
+      - naming-server
+      - mysql 
+    environment:
+      RDS_HOSTNAME: mysql
+      RDS_PORT: 3306
+      RDS_DB_NAME: micro-user-db
+      RDS_USERNAME: root
+      RDS_PASSWORD: abc
+    networks:
+      - pixogram-network
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: abc 
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: micro-user-db
+    volumes:
+      - mysql-database-data-volume:d:\data\mysql
+    networks:
+      - pixogram-network 
+  
+# Networks to be created to facilitate communication between containers
+networks:
+  pixogram-network:
