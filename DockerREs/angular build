@@ -1,0 +1,4 @@
+ng build --prod
+
+FROM nginx:1.17.1-alpine
+COPY /dist/<app-name> /usr/share/nginx/html
