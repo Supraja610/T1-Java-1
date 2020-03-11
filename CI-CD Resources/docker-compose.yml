@@ -1,0 +1,46 @@
+version: '3.7'
+
+services:
+  
+  naming-service:
+    image: cts/discovery-server:0.0.1-SNAPSHOT
+    ports:
+      - "8761:8761"
+    networks:
+      - pixogram-network
+
+  
+  user-service:
+    image: cts/userservice-micro:0.0.1-SNAPSHOT
+    ports:
+      - "7006:7006"
+    restart: always
+    depends_on:
+      - mysql 
+      - naming-service
+    environment:
+      RDS_HOSTNAME: mysql
+      RDS_PORT: 3309
+      RDS_USERNAME: root
+      RDS_PASSWORD: abc
+    networks:
+      - pixogram-network
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3309:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: abc 
+      # volumes:
+      # - mysql-database-data-volume: e:/data
+    networks:
+      - pixogram-network 
+
+# Volumes
+# volumes:
+  # mysql-database-data-volume:  
+# Networks to be created to facilitate communication between containers
+networks:
+  pixogram-network:
